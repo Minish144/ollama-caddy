@@ -1,0 +1,6 @@
+.DS_Store
+.env
+caddy_data/*
+!caddy_data/.gitkeep
+ollama
+open-webui

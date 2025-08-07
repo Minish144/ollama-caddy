@@ -1,0 +1,46 @@
+services:
+  ollama:
+    image: ollama/ollama:0.11.3
+    expose:
+      - "11434"
+    volumes:
+      - ./ollama:/root/.ollama
+      - ./entrypoint.sh:/entrypoint.sh
+    environment:
+      - OLLAMA_DEVICE=cpu
+    restart: always
+    tty: true
+    container_name: ollama
+    entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
+ 
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "14080:8080"
+    volumes:
+      - ./open-webui:/app/backend/data
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - ENABLE_SIGNUP=false
+    env_file:
+      - .env
+    depends_on:
+      - ollama
+    restart: always
+    container_name: ollama-web-ui
+
+  caddy:
+    image: caddy:2.8-alpine
+    ports:
+      - "10434:10434"
+    volumes:
+      - ./Caddyfile.template:/etc/caddy/Caddyfile.template
+      - ./caddy_data:/data
+    env_file:
+      - .env
+    command: >
+      sh -c 'apk add gettext && envsubst < /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && exec caddy run --config /etc/caddy/Caddyfile'
+    depends_on:
+      - ollama
+    restart: always
+    container_name: ollama-caddy
