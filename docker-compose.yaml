@@ -6,12 +6,20 @@ services:
     volumes:
       - ./ollama:/root/.ollama
       - ./entrypoint.sh:/entrypoint.sh
-    environment:
-      - OLLAMA_DEVICE=cpu
     restart: always
     tty: true
     container_name: ollama
     entrypoint: ["/usr/bin/bash", "/entrypoint.sh"]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - LOG_LEVEL=debug
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: [gpu]
+              count: all
  
   openwebui:
     image: ghcr.io/open-webui/open-webui:main
