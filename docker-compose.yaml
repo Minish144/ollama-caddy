@@ -54,7 +54,7 @@ services:
     container_name: ollama-caddy
 
   n8n:
-    image: docker.n8n.io/n8nio/n8n 
+    image: n8nio/n8n:1.109.1
     ports:
       - "15678:5678"
     volumes:
