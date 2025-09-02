@@ -4,3 +4,6 @@ caddy_data/*
 !caddy_data/.gitkeep
 ollama
 open-webui
+n8n_data/*
+!n8n_data/.gitkeep
+
