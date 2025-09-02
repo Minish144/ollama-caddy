@@ -59,5 +59,9 @@ services:
       - "15678:5678"
     volumes:
       - ./n8n_data:/home/node/.n8n
+    env_file:
+      - .env
+    ports:
+      - "5678:5678"
     restart: always
     container_name: n8n
