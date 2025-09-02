@@ -20,7 +20,7 @@ services:
             - driver: nvidia
               capabilities: [gpu]
               count: all
- 
+
   openwebui:
     image: ghcr.io/open-webui/open-webui:main
     ports:
