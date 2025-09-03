@@ -52,7 +52,7 @@ services:
     image: caddy:2.8-alpine
     ports:
       - "10434:10434"
-      - "15678:15678"
+      - "5678:5678"
     volumes:
       - ./Caddyfile.template:/etc/caddy/Caddyfile.template
       - ./caddy_data:/data
