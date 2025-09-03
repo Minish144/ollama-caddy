@@ -40,7 +40,7 @@ $N8N_HOST {
     }
 }
 
-n8n.$N8N_HOST:443 {
+n8n.$N8N_HOST {
     reverse_proxy n8n:443 {
         header_up Host {http.reverse_proxy.upstream.hostport}
     }
