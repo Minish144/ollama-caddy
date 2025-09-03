@@ -28,19 +28,6 @@
 }
 
 $N8N_HOST {
-    handle {
-        root * /srv
-        file_server
-        encode gzip
-    }
-
-    tls {
-        protocols tls1.2 tls1.3
-        issuer acme
-    }
-}
-
-n8n.$N8N_HOST {
     reverse_proxy n8n:443 {
         header_up Host {http.reverse_proxy.upstream.hostport}
     }
