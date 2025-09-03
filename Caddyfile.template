@@ -20,6 +20,11 @@
 	respond @unauthorized "Unauthorized" 401 {
 		close
 	}
+
+    tls {
+        protocols tls1.2 tls1.3
+        issuer acme
+    }
 }
 
 $N8N_HOST:15678 {
