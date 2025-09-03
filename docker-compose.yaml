@@ -44,7 +44,7 @@ services:
     volumes:
       - ./n8n_data:/home/node/.n8n
     environment:
-      - N8N_PORT=8443
+      - N8N_PORT=443
     env_file:
       - .env
     restart: always
@@ -56,7 +56,6 @@ services:
       - "80:80"
       - "443:443"
       - "10434:10434"
-      - "8443:8443"
     volumes:
       - ./Caddyfile.template:/etc/caddy/Caddyfile.template
       - ./caddy_data:/data
