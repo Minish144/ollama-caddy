@@ -61,7 +61,7 @@ services:
     env_file:
       - .env
     command: >
-      sh -c 'apk add gettext && envsubst < /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && exec caddy run --config /etc/caddy/Caddyfile'
+      sh -c 'apk add gettext openssl && mkdir -p /ssl && if [ ! -f /ssl/n8n.crt ]; then openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /ssl/n8n.key -out /ssl/n8n.crt -subj "/CN=${N8N_HOST:-localhost}"; fi && envsubst < /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && exec caddy run --config /etc/caddy/Caddyfile'
     depends_on:
       - ollama
       - n8n
