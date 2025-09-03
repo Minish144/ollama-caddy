@@ -40,9 +40,11 @@ services:
   n8n:
     image: n8nio/n8n:1.109.1
     expose:
-      - "5678"
+      - "8443"
     volumes:
       - ./n8n_data:/home/node/.n8n
+    environment:
+      - N8N_PORT=8443
     env_file:
       - .env
     restart: always
@@ -52,7 +54,7 @@ services:
     image: caddy:2.8-alpine
     ports:
       - "10434:10434"
-      - "5678:5678"
+      - "8443:8443"
     volumes:
       - ./Caddyfile.template:/etc/caddy/Caddyfile.template
       - ./caddy_data:/data

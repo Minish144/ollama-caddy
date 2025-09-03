@@ -27,8 +27,8 @@
     }
 }
 
-$N8N_HOST:5678 {
-    reverse_proxy n8n:5678 {
+$N8N_HOST:8443 {
+    reverse_proxy n8n:8443 {
         header_up Host {http.reverse_proxy.upstream.hostport}
     }
     
