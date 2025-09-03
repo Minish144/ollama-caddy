@@ -37,29 +37,33 @@ services:
     restart: always
     container_name: ollama-web-ui
 
-  caddy:
-    image: caddy:2.8-alpine
-    ports:
-      - "10434:10434"
-    volumes:
-      - ./Caddyfile.template:/etc/caddy/Caddyfile.template
-      - ./caddy_data:/data
-    env_file:
-      - .env
-    command: >
-      sh -c 'apk add gettext && envsubst < /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && exec caddy run --config /etc/caddy/Caddyfile'
-    depends_on:
-      - ollama
-    restart: always
-    container_name: ollama-caddy
-
   n8n:
     image: n8nio/n8n:1.109.1
-    ports:
-      - "15678:5678"
+    expose:
+      - "5678"
     volumes:
       - ./n8n_data:/home/node/.n8n
     env_file:
       - .env
     restart: always
     container_name: n8n
+
+  caddy:
+    image: caddy:2.8-alpine
+    ports:
+      - "10434:10434"
+      - "15678:15678"
+    volumes:
+      - ./Caddyfile.template:/etc/caddy/Caddyfile.template
+      - ./caddy_data:/data
+    environment:
+      - ACME_AGREE=true
+    env_file:
+      - .env
+    command: >
+      sh -c 'apk add gettext && envsubst < /etc/caddy/Caddyfile.template > /etc/caddy/Caddyfile && exec caddy run --config /etc/caddy/Caddyfile'
+    depends_on:
+      - ollama
+      - n8n
+    restart: always
+    container_name: ollama-caddy

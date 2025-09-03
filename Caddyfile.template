@@ -21,3 +21,17 @@
 		close
 	}
 }
+
+$N8N_HOST:15678 {
+    reverse_proxy n8n:5678 {
+        header_up -Origin
+        header_up X-Real-IP {remote_host}
+        header_up X-Forwarded-For {remote_host}
+        header_up X-Forwarded-Proto {scheme}
+    }
+    
+    tls {
+        protocols tls1.2 tls1.3
+        issuer acme
+    }
+}
