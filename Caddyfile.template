@@ -32,5 +32,8 @@ $N8N_HOST:8443 {
         header_up Host {http.reverse_proxy.upstream.hostport}
     }
     
-    tls /ssl/n8n.crt /ssl/n8n.key
+    tls {
+        protocols tls1.2 tls1.3
+        issuer acme
+    }
 }
